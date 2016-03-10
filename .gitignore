@@ -1,0 +1,16 @@
+gopath/bin
+gopath/pkg
+gopath/src/main/main
+gopath/src/9fans.net/go
+gopath/src/github.com/golang/lint
+gopath/src/github.com/nsf/gocode
+gopath/src/github.com/rogpeppe/godef
+gopath/src/golang.org/x/tools
+
+#EMACS temp files
+*~
+\#*
+.#*
+
+#Final binaries
+/main
