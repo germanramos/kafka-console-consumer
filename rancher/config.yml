@@ -1,5 +1,0 @@
-name: etl-create-agreement
-description: |
-  ETL process that reads events from Kafka, produce a vector for each read event, write the vector in a another Kafka topic.
-version: 0.1.0
-maintainer: "German Ramos <german.ramos.garcia@bbva.com>"
