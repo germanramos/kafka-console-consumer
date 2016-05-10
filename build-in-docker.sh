@@ -11,12 +11,6 @@ BASENAME=$(basename `pwd`)
 : ${GO_STAGE_NAME:=build}
 : ${VERSION:="0.1.0"}
 
-if [ "$GO_PIPELINE_COUNTER" == "dev" ]; then
-    BASE_PATH=""
-else
-    BASE_PATH=$(docker inspect r-$HOSTNAME |grep UpperDir |cut -d '"' -f 4)
-fi
-
 BUILD_COMMAND="docker run  \
        -v $BASE_PATH$PWD:/go \
        -e GO_UID=$GO_UID \
