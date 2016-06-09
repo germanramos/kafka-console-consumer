@@ -35,6 +35,10 @@ environment variable, default value, description
 - BUFFER_SIZE, "256", The buffer size of stdout message channel
 - VERBOSE, "false, Set to `true` if you want verbose output
 
+## Download
+
+https://github.com/germanramos/kafka-console-consumer/releases/download/v0.3.0/kafka-console-consumer
+
 ## Run Example
 
 ```
