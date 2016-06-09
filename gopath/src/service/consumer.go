@@ -48,11 +48,11 @@ func waitForTopic(brokerList []string, topic string) {
 		topics, _ := client.Topics()
 		for _, topicElement := range topics {
 			if topic == topicElement {
-				log.Printf("Failed to find topic %s\n", topic)
+				log.Printf("Topic %s found\n", topic)
 				return
 			}
 		}
-		log.Printf("Topic %s not found\n", topic)
+		log.Printf("Failed to find topic %s\n", topic)
 		time.Sleep(time.Second * 3)
 	}
 }
