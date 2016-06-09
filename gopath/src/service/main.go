@@ -11,13 +11,13 @@ import (
 func main() {
 	log.SetOutput(os.Stderr)
 	var (
-		kafkaService = getConfig("KAFKA_SERVICE", "kafka")          // The DNS name for input Kafka broker service
-		kafkaPort    = getConfig("KAFKA_PORT", "9092")              // Port to connect to input Kafka peers
-		topic        = getConfig("TOPIC", "create-agreement")       // `create-agreement`. The topic to consume
-		groupID      = getConfig("KAFKA_GROUP", "kafka-datasource") // `all`. The partitions to consume, can be 'all' or comma-separated numbers
-		offset       = getConfig("OFFSET", "newest")                // `newest`. The offset to start with. Can be `oldest`, `newest`
-		bufferSize   = getConfig("BUFFER_SIZE", "256")              // `256`. The buffer size of the message channel. Recommended `256`
-		verbose      = getConfig("VERBOSE", "false")                // `false` . `true` if you want to turn on sarama logging
+		kafkaService = getConfig("KAFKA_SERVICE", "kafka")                // The DNS name for input Kafka broker service
+		kafkaPort    = getConfig("KAFKA_PORT", "9092")                    // Port to connect to input Kafka peers
+		topic        = getConfig("TOPIC", "create-agreement")             // `create-agreement`. The topic to consume
+		groupID      = getConfig("KAFKA_GROUP", "kafka-console-consumer") // `all`. The partitions to consume, can be 'all' or comma-separated numbers
+		offset       = getConfig("OFFSET", "newest")                      // `newest`. The offset to start with. Can be `oldest`, `newest`
+		bufferSize   = getConfig("BUFFER_SIZE", "256")                    // `256`. The buffer size of the message channel. Recommended `256`
+		verbose      = getConfig("VERBOSE", "false")                      // `false` . `true` if you want to turn on sarama logging
 	)
 
 	messages := initializeChannels(bufferSize)
