@@ -11,23 +11,7 @@ import (
 	"gopkg.in/bsm/sarama-cluster.v2"
 )
 
-func consumer(kafkaService string,
-	kafkaPort string,
-	topic string,
-	groupID string,
-	offset string,
-	messages chan *sarama.ConsumerMessage,
-	verbose bool) {
-	var (
-		err        error
-		brokerList []string
-		consumer   *cluster.Consumer
-	)
-
-	if verbose == true {
-		sarama.Logger = log.New(os.Stdout, "[sarama] ", log.LstdFlags)
-	}
-
+func getInitialOffset(offset string) int64 {
 	var initialOffset int64
 	switch offset {
 	case "oldest":
@@ -37,8 +21,12 @@ func consumer(kafkaService string,
 	default:
 		log.Fatalln("Offset should be `oldest` or `newest`")
 	}
+	return initialOffset
+}
 
-	// Get Kafka peers
+func getKafkaPeers(kafkaService string, kafkaPort string) []string {
+	var err error
+	var brokerList []string
 	for err != nil || brokerList == nil {
 		brokerList, err = net.LookupHost(kafkaService)
 		if err != nil {
@@ -50,12 +38,49 @@ func consumer(kafkaService string,
 		brokerList[i] = e + ":" + kafkaPort
 	}
 	log.Println("Input Kafka Broker List:", brokerList)
+	return brokerList
+}
 
-	config := cluster.NewConfig()
-	config.Consumer.Offsets.Initial = initialOffset
-	err = errors.New("Init")
+func waitForTopic(brokerList []string, topic string) {
+	for {
+		saramaConfig := sarama.NewConfig()
+		client, _ := sarama.NewClient(brokerList, saramaConfig)
+		topics, _ := client.Topics()
+		for _, topicElement := range topics {
+			if topic == topicElement {
+				log.Printf("Failed to find topic %s\n", topic)
+				return
+			}
+		}
+		log.Printf("Topic %s not found\n", topic)
+		time.Sleep(time.Second * 3)
+	}
+}
+
+func consumer(kafkaService string,
+	kafkaPort string,
+	topic string,
+	groupID string,
+	offset string,
+	messages chan *sarama.ConsumerMessage,
+	verbose bool) {
+
+	var consumer *cluster.Consumer
+
+	if verbose == true {
+		sarama.Logger = log.New(os.Stdout, "[sarama] ", log.LstdFlags)
+	}
+
+	initialOffset := getInitialOffset(offset)
+	brokerList := getKafkaPeers(kafkaService, kafkaPort)
+	waitForTopic(brokerList, topic)
+
+	// Create consumer with sarama-cluster
+	clusterConfig := cluster.NewConfig()
+	clusterConfig.Consumer.Offsets.Initial = initialOffset
+	err := errors.New("Init")
 	for err != nil {
-		consumer, err = cluster.NewConsumer(brokerList, groupID, []string{topic}, config)
+		consumer, err = cluster.NewConsumer(brokerList, groupID, []string{topic}, clusterConfig)
 		if err != nil {
 			log.Println("Failed to start Sarama consumer:", err)
 			time.Sleep(time.Second * 3)
