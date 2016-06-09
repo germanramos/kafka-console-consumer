@@ -1,9 +1,10 @@
 # kafka-console-consumer
 
-Golang kafka-console-consumer using sarama driver.
+kafka-console-consumer implemented in golang and using [sarama](https://github.com/Shopify/sarama) driver.
 
 ## Features
 
+- Works with Apache Kafka >= 0.8
 - Statically compiled. No dependencies. It run on every linux distribution.
 - Just one binary file of ~ 6 Mb
 - It prints consumed messages in stdout
