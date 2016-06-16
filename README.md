@@ -45,6 +45,10 @@ https://github.com/germanramos/kafka-console-consumer/releases/download/v0.3.0/k
 KAFKA_SERVICE=192.168.1.45 TOPIC=foo ./kafka-console-consumer
 ```
 
+## Related work
+
+https://github.com/germanramos/kafka-console-producer
+
 ## License
 
 MIT - German Ramos
