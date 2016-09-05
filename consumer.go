@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/Shopify/sarama"
-	"gopkg.in/bsm/sarama-cluster.v2"
+	cluster "github.com/bsm/sarama-cluster"
 )
 
 func getInitialOffset(offset string) int64 {
