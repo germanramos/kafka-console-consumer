@@ -4,7 +4,7 @@ kafka-console-consumer implemented in golang and using [sarama](https://github.c
 
 ## Features
 
-- Works with Apache Kafka >= 0.8
+- Works with Apache Kafka 0.8, 0.9 and 0.10
 - Statically compiled. No dependencies. It run on every linux distribution.
 - Just one binary file of ~ 6 Mb
 - It prints consumed messages in stdout
@@ -23,9 +23,12 @@ For example:
 export GOPATH=`pwd`/gopath
 ```
 
-## Install dependencies
+## Update dependencies (you probably do not need this)
 ```
+rm -rf gopath
 go get -v ./...
+cd gopath
+find . -type d -name ".git" | xargs rm -rf
 ```
 
 ## Local Build
