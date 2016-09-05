@@ -17,6 +17,34 @@ kafka-console-consumer implemented in golang and using [sarama](https://github.c
 - Waits for topic to be created
 - Auto reconnect
 
+## Set your GOPATH environment
+For example:
+```
+export GOPATH=`pwd`/gopath
+```
+
+## Install dependencies
+```
+go get -v ./...
+```
+
+## Local Build
+```
+# This will generate kafka-console-consumer binary
+go build
+```
+or
+```
+# This will generate "service" binary
+./build.sh
+```
+
+## Build in Docker (outputs Linux binany)
+```
+# This will generate "service" *Linux* binary
+./build-in-docker.sh
+```
+
 ## Usage
 
 ```

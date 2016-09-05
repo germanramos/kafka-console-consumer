@@ -1,7 +1,7 @@
 #!/bin/sh
 source env.sh
 echo "Building..."
-CGO_ENABLED=0 go build -v -a -installsuffix cgo service
+CGO_ENABLED=0 go build -v -a -installsuffix cgo -o service
 ERROR=$?
 if [ -n "$GO_UID" ]; then
   echo "Setting $GO_UID:$GO_GID to service..."
