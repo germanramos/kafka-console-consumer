@@ -44,15 +44,23 @@ func getKafkaPeers(kafkaService string, kafkaPort string) []string {
 func waitForTopic(brokerList []string, topic string) {
 	for {
 		saramaConfig := sarama.NewConfig()
-		client, _ := sarama.NewClient(brokerList, saramaConfig)
-		topics, _ := client.Topics()
-		for _, topicElement := range topics {
-			if topic == topicElement {
-				log.Printf("Topic %s found\n", topic)
-				return
+		client, err := sarama.NewClient(brokerList, saramaConfig)
+		if err != nil {
+			log.Printf("Failed to create Kafka client %s\n", err)
+		} else {
+			topics, err := client.Topics()
+			if err != nil {
+				log.Printf("Failed to fetch topic list %s\n", err)
+			} else {
+				for _, topicElement := range topics {
+					if topic == topicElement {
+						log.Printf("Topic %s found\n", topic)
+						return
+					}
+				}
+				log.Printf("Failed to find topic %s\n", topic)
 			}
 		}
-		log.Printf("Failed to find topic %s\n", topic)
 		time.Sleep(time.Second * 3)
 	}
 }
